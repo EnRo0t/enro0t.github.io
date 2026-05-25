@@ -1,0 +1,103 @@
+*{
+	box-sizing: border-box;
+}
+
+body {
+		background-color: black;
+		margin: 0;
+		padding: 0;
+}
+
+.flex-father {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+}
+
+.site-title {
+		display: flex;
+		justify-content: center;
+		color: white;
+		font-size: 48px;
+		margin: 10px;
+}
+
+.flex-nav {
+		display: flex;
+		justify-content: space-around;
+		width: 75%;
+		font-size: 24px;
+		color: white;
+		margin: 0;
+}
+
+.flex-main {
+		display: flex;
+		flex-direction: row;
+		align-items: space-around;
+		margin-top:5px;
+		margin-left:50px;
+		padding: 20px;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		box-sizing: border-box;
+		color: white;
+}
+
+.menu-option {
+		border-radius: 10px;
+		padding: 10px;
+		transition: background-color 0.3s ease;
+}
+.menu-option:hover {
+		background-color: #e74c3c;
+}
+
+a {
+		text-decoration: none;
+		color: white;
+}
+
+.galeria {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 50px;
+}
+
+.galeria table td {
+		padding-right: 150px;
+		padding-left: 150;
+}
+
+img {
+	width: 100%;
+}
+
+.row {
+	display:flex;
+	padding: 5px;
+	flex-wrap: wrap;
+}
+
+.column {
+	flex: 25%;
+	padding: 5px;
+}
+
+.column img{
+	margin-top: 5px;
+}
+
+@media (max-width: 600px){
+	.column{
+		flex:100%;
+	}
+}
+
+@media (max-width: 800px) {
+	.column {
+		flex:100%;
+	}
+}
