@@ -60,18 +60,6 @@ a {
 		color: white;
 }
 
-.galeria {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 50px;
-}
-
-.galeria table td {
-		padding-right: 150px;
-		padding-left: 150;
-}
-
 img {
 	width: 100%;
 }
@@ -83,7 +71,7 @@ img {
 }
 
 .column {
-	flex: 25%;
+	flex: 20%;
 	padding: 5px;
 }
 
