@@ -1,3 +1,12 @@
+:root {
+		/*		Colors		*/
+		--color-red: #e74c3c;
+
+		/*		img sizes	*/
+		--img-blog-grid: 300px;
+		--img-outstanding: 600px;
+}
+
 *{
 	box-sizing: border-box;
 	color: white;
@@ -52,7 +61,7 @@ body {
 		transition: background-color 0.3s ease;
 }
 .menu-option:hover {
-		background-color: #e74c3c;
+		background-color: var(--color-red);
 }
 
 a {
@@ -98,43 +107,84 @@ img {
 }
 
 /*---------------------------------------------*/
-/*						BLOG				   */
+/*						HOME				   */
 /*---------------------------------------------*/
 
-.general-section {
-  display: grid;
-  grid-template-columns: 1fr 3fr;  /* aside | contenido */
-  align-items: start;
-  width: 70%;
-  margin: 20px auto;
+main {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 }
 
-.general-section aside {
-  position: sticky;   /* se queda fijo al hacer scroll */
-  top: 0;
-  align-self: start;
+.main-container {
+		display: grid;
+		grid-template-columns: 1fr 9fr;
+		grid-template-rows: 1fr 5fr;
+		margin: 5px;
+		width: 70%;
 }
 
-.content-column {
-  display: flex;
-  flex-direction: column;  /* filas apiladas */
-  gap: 20px;
+.main-container aside {
+		grid-row: span 2; /* Le digo que aside ocupe 2 filas */
+		
+		ul {
+				margin-top: 0;
+				list-style-type: none;
+		}
+		li {
+				margin: 5px;
+				transform: 0.9s 0.9s ease;
+		}
+		li:hover {	
+				background: var(--color-red);
+				margin: 5px;
+				border-radius: 5px;
+				text-align: center;
+		}
 }
 
-.blog-preview {
-  display: flex;
-  gap: 10px;
+.outstanding {
+		padding: 10px;
+		display: grid;
+		grid-template-columns: 1fr 9fr;
+		gap: 20px;
+		align-items: start;
 }
 
-.descripcion {
-  text-align: justify;
-  width: 60%;
-  margin: 10px;
+.outstanding img {
+		max-width: var(--img-outstanding);
+		max-height: var(--img-outstanding);
+		min-width: 400px;
+		min-height: 400px;
 }
 
-.vertical-line {
-  height: 200px;
-  width: 1px;
-  background-color: white;
-  margin: 5px;
+.outstanding-content h2 {
+		margin-top: 0;
+		font-size: 36px;
 }
+
+.outstanding-content {
+		margin: 0;		
+}
+
+.grid-blogs {
+	border: solid 1px red;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 10px;
+	padding: 10px;
+	align-items: start;
+}
+
+.grid-blogs div{
+		border: solid 1px white;
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+}
+
+.grid-blogs img {
+		width: var(--img-blog-grid);
+		height: var(--img-blog-grid);
+}
+
+
