@@ -168,7 +168,6 @@ main {
 }
 
 .grid-blogs {
-	border: solid 1px red;
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 10px;
@@ -187,4 +186,29 @@ main {
 		height: var(--img-blog-grid);
 }
 
+.leer {
+    background: var(--color-red);
+    margin: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
 
+/*-----------------------------------------*/
+/*					BLOG				   */
+/*-----------------------------------------*/
+
+.blog-entrada {
+	display: flex;
+	justify-content: center;
+	align-items: start;
+	flex-wrap: wrap;
+	width: 70%;
+}
+.blog-entrada img {
+	max-width: 900px;
+	max-height: 600px;
+}
+
+.blog-entrada  p {
+	width: 100%;
+}
