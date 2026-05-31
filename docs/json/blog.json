@@ -1,9 +1,9 @@
 [
 		{
 "fecha": "31-05-2026",
-"titulo": "blog test",
+"titulo": "Bienvenida",
 "filePath":"blogs/test.html",
-"imgPath":"assets/1999.webp",
-"descripcion": "bla bla bla bla bla"
+"imgPath":"assets/clouds.jpg",
+"descripcion": "Primera entrada del blog, sirve como presentación a la web."
 		}
 ]
