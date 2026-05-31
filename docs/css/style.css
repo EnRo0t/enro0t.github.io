@@ -10,6 +10,10 @@
 *{
 	box-sizing: border-box;
 	color: white;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
 }
 
 body {
@@ -138,6 +142,7 @@ main {
 		li {
 				margin: 5px;
 				transform: 0.9s 0.9s ease;
+				padding: 5px;
 		}
 		li:hover {	
 				background: var(--color-red);
@@ -192,7 +197,8 @@ main {
 
 .leer {
     background: var(--color-red);
-    margin: 5px;
+    margin-top: 10px;
+	padding: 5px;
     border-radius: 5px;
     text-align: center;
 }
@@ -215,4 +221,18 @@ main {
 
 .blog-entrada  p {
 	width: 100%;
+	text-align: justify;
+	margin: 10px;
+}
+
+.blog-entrada strong {
+		color: var(--color-red);
+		font-size: 24px;
+
+}
+
+.firma {
+		display: flex;
+		justify-content: end;
+
 }
