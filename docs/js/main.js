@@ -30,7 +30,7 @@ fetch("json/blog.json")
                 } else {
                         // Los siguientes artículos (índice 1, 2, 3...) se acumulan para la cuadrícula
                         htmlGridContenido += `
-                        <div>
+                        <div class="grid-blog-article">
                                 <img src="${b.imgPath}" alt="${b.titulo}"/>
                                 <div class="grid-blogs-content">
                                         <h3>${b.titulo}</h3>
