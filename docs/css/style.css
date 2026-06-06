@@ -1,6 +1,8 @@
 :root {
 		/*		Colors		*/
-		--color-red: #e74c3c;
+		--color-primary: #000;
+		--color-accent: #e74c3c;
+		
 
 		/*		img sizes	*/
 		--img-blog-grid: 300px;
@@ -17,7 +19,9 @@
 }
 
 body {
-		background-color: black;
+		/*background-color: var(--color-primary);*/
+		background-image: url(../assets/background-3.jpg);
+		background-size: cover;
 		margin: 0;
 		padding: 0;
 }
@@ -47,7 +51,7 @@ body {
 }
 
 .asterisco {
-		color: var(--color-red);
+		color: var(--color-accent);
 		display: inline-block;
 		transition: transform 0.3s ease;
 }
@@ -75,7 +79,7 @@ body {
 		transition: background-color 0.3s ease;
 }
 .menu-option:hover {
-		background-color: var(--color-red);
+		background-color: var(--color-accent);
 }
 
 a {
@@ -155,7 +159,7 @@ main {
 				padding: 5px;
 		}
 		li:hover {	
-				background: var(--color-red);
+				background: var(--color-accent);
 				margin: 5px;
 				border-radius: 5px;
 				text-align: center;
@@ -216,7 +220,7 @@ main {
 }
 
 .leer {
-    background: var(--color-red);
+    background: var(--color-accent);
     margin-top: 10px;
 	padding: 5px;
     border-radius: 5px;
@@ -247,7 +251,7 @@ main {
 }
 
 .blog-entrada strong {
-		color: var(--color-red);
+		color: var(--color-accent);
 		font-size: 24px;
 
 }
