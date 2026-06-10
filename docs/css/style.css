@@ -14,7 +14,6 @@
 	color: white;
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
-    font-weight: <weight>;
     font-style: normal;
 }
 
@@ -285,4 +284,168 @@ main {
 		display: flex;
 		justify-content: end;
 
+}
+
+/*-------------------------------------------------*/
+/*					   ABOUT					   */
+/*-------------------------------------------------*/
+
+
+.about-container {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	gap: 40px;
+	justify-content: center;
+}
+
+.about-container img {
+	width: 350px;
+	height: auto;
+	border-radius: 50%;
+	margin: 0;
+}
+
+.about-desc {
+	width: 85%;
+}
+
+
+.hacker {
+	background: linear-gradient(#1dbb08,#127505);
+	/* Recortamos fondo para que solo se aplique el texto */
+	-webkit-background-clip: text;
+	background-clip: text;
+	/* Volvemos el texto transparente para que se vea el fondo a través */
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	
+}
+
+.maker {
+	background: linear-gradient(#ffffff,#8b8b8b);
+	/* Recortamos fondo para que solo se aplique el texto */
+	-webkit-background-clip: text;
+	background-clip: text;
+	/* Volvemos el texto transparente para que se vea el fondo a través */
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+
+.programmer {
+	background: linear-gradient(#ffa048,#c27a37);
+	/* Recortamos fondo para que solo se aplique el texto */
+	-webkit-background-clip: text;
+	background-clip: text;
+	/* Volvemos el texto transparente para que se vea el fondo a través */
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+
+.letA {
+	animation: colorChange 3s linear infinite 0s;
+}
+.letD {
+	animation: colorChange 3s linear infinite 0.75s;
+}
+.letH {
+	animation: colorChange 3s linear infinite 1.5s;
+}
+.letD2 {
+	animation: colorChange 3s linear infinite 2.25s;
+}
+
+@keyframes colorChange {
+	0% {
+		color: white;
+	}
+	50% {
+		color:hotpink; 
+	}
+	100% {
+		color: white;
+	}
+}
+
+/*-----------------------------------------------------------------*/
+/*						ABOUT-3DSPHERE							   */
+/*-----------------------------------------------------------------*/
+
+.sphere-container {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.sphere1 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: solid 2px red;
+    position: absolute;
+    animation: giroscopio1 4s ease-in infinite;
+}
+
+.sphere2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: solid 2px blue;
+    position: absolute;
+    animation: giroscopio2 6s ease-in-out infinite 0.5s;
+}
+
+.sphere3 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: solid 2px green;
+    position: absolute;
+    animation: giroscopio3 5s ease-out infinite; 
+}
+@keyframes giroscopio1 {
+    0% {
+        rotate: 0deg;
+        width: 100%;
+    }
+    50% {
+        width: 40%;
+        border: 4px pink solid;   
+    }
+    100% {
+        rotate: -360deg;
+        width: 100%;
+    }
+}
+
+@keyframes giroscopio2 {
+    0% {
+        rotate: 0deg;
+        width: 100%;
+    }
+    50% {
+        width: 40%;
+        border: 4px lime solid;   
+    }
+    100% {
+        rotate: 360deg;
+        width: 100%;
+    }
+}
+
+@keyframes giroscopio3 {
+    0% {
+        rotate: 0deg;
+        width: 100%;
+    }
+    50% {
+         width: 40%;   
+        border: 4px cyan solid;   
+    }
+    100% {
+        rotate: 360deg;
+        width: 100%;
+    }
 }
