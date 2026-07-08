@@ -196,13 +196,14 @@ main {
 		grid-template-columns: 1fr 9fr;
 		gap: 20px;
 		align-items: start;
+		margin-bottom: 20px;
 }
 
 .outstanding img {
 		max-width: var(--img-outstanding);
 		max-height: var(--img-outstanding);
-		min-width: 400px;
-		min-height: 400px;
+		min-width: 300px;
+		min-height: 300px;
 }
 
 .outstanding-content h2 {
@@ -264,8 +265,8 @@ main {
 	width: 70%;
 }
 .blog-entrada img {
-	max-width: 900px;
-	max-height: 600px;
+	max-width: 2000px;
+	max-height: 500px;
 }
 
 .blog-entrada  p {
@@ -284,6 +285,45 @@ main {
 		display: flex;
 		justify-content: end;
 
+}
+
+.subtitulo {
+	width: 100%;
+}
+
+.imgRecurso {
+	width: 900px;
+	max-height:600px;
+}
+
+
+figure figcaption{
+	font-style: italic;
+	font-size: 14px;
+}
+
+/* Para bloques de codigo */
+
+pre {
+	border: 1px double white;
+	background-color: black;
+	width: 100%;
+	padding: 16px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+/* -----------------------  */
+
+blockquote {
+  width: 100%;
+  font-size: 14px;
+  text-align: justify;
+  background-color: rgba(56, 56, 56, 0.6);
+  box-sizing: border-box;
+  padding: 20px;
+  overflow-wrap: break-word; /* evita que palabras largas se salgan */
+  word-wrap: break-word;
 }
 
 /*-------------------------------------------------*/

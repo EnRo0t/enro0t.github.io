@@ -60,15 +60,14 @@ fetch("json/blog.json")
 
 const headerContent = `
         <div class="site-title">
-            <img src="assets/luci2.webp" style="width: 250px; height: 200px"/>
+            <img src="https://enro0t.github.io/assets/luci2.webp" style="width: 250px; height: 200px"/>
 					<a href="index.html"><h1>E N R 0 0 T <span class="asterisco">*</span></h1></a>
         </div>
         <div class="flex-father">
             <nav class="flex-nav">
-                <a href="index.html" class="menu-option"><b>HOME</b></a>
-                <a href="" class="menu-option"><b>PROYECTOS</b></a> 
-                <a href="imagenes.html" class="menu-option"><b>IMÁGENES</b></a>
-                <a href="about.html" class="menu-option"><b>ABOUT</b></a>
+                <a href="https://enro0t.github.io/index.html" class="menu-option"><b>HOME</b></a>
+                <a href="https://enro0t.github.io/images.html" class="menu-option"><b>IMÁGENES</b></a>
+                <a href="https://enro0t.github.io/about.html" class="menu-option"><b>ABOUT</b></a>
             </nav>
         </div>
         <hr style="width: 75%">

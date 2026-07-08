@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Enoch Root">
+    <title>Blog personal EnRoot</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" /> <!-- Para resaltar bloques de código -->
+</head>
+<body>
+    <header id="headerContainer">
+    </header>
+	<main>
+        <section class="blog-entrada">
+<img src="../assets/header_gicsp.png"/>
+            <h1>Camino a la GICSP — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)</h1>
+            <p><b>09-07-2026</b></p>
+            <hr style="width: 100%;">
+            <p> Hace unos tres años que estoy dentro del mundo de la
+            ciberseguridad, primero como estudiante y después como profesional.
+            Durante este tiempo he ido aprendiendo fundamentos de redes,
+            sistemas, protocolos, programación, scripting y un largo etcétera de
+            habilidades y conocimientos. Pero en realidad, mi deriva hacia la
+            ciberseguridad empezó como una simple curiosidad profesional. Antes
+            de esto, había trabajado como técnico electricista en sectores muy
+            distintos —industrial, civil e incluso naval— y en todos ellos
+            siempre había un componente, aunque pequeño, relacionado con la
+            informática. Lo que empezó como una forma de ganar autonomía frente
+            a lo que no sabía, pronto se convirtió en un interés genuino por
+            descubrir todo lo que aquel nuevo mundo tenía para ofrecerme.
+            </p>
+            <p> Durante el último año he estado casi enteramente centrado en IT:
+            me saqué la certificación eJPT, terminé el penúltimo curso de DAW —a
+            falta de dos asignaturas para acabarlo— y hace poco entré en mi
+            primer trabajo de ciberseguridad como técnico de sistemas. Conocer
+            el sector desde dentro me ha ayudado a entender mi sitio y mi rol. Y
+            tras darle muchas vueltas, he llegado a una conclusión: mi perfil
+            híbrido —informático y electricista— no es nada despreciable. Uno no
+            sustituye al otro; existe entre ambos una sinergia muy interesante.            
+            </p>
+            <p>
+                Por eso, mi siguiente paso natural es juntar estos dos mundos, y
+                no se me ocurre mejor forma de hacerlo que especializándome en
+                ciberseguridad industrial. Ahí es donde entra el <strong>GICSP</strong>: quiero
+                estudiarlo a fondo, pero antes de sumergirme en la teoría,
+                sentía que me faltaba dar un buen repaso práctico a los sistemas
+                industriales.
+            </p>
+            <blockquote>
+            
+                >> 
+                El GICSP (Global Industrial Cyber Security Professional) es una
+                certificación de GIAC enfocada en la seguridad de sistemas de
+                control industrial (ICS) y tecnología operacional (OT). A
+                diferencia de la mayoría de certificaciones de ciberseguridad,
+                centradas en el mundo IT, el GICSP nace para cubrir un terreno
+                distinto: el de las plantas industriales, donde conviven PLCs,
+                SCADA, sensores y redes que no siempre siguen las mismas reglas
+                que un entorno IT tradicional.
+                
+            </blockquote>
+            <p>
+                Por eso está pensada precisamente para un perfil híbrido: no
+                basta con saber de ciberseguridad, también hay que entender cómo
+                funcionan físicamente estos sistemas —ingeniería,
+                automatización, protocolos industriales— porque en OT un fallo
+                no solo compromete datos, puede comprometer procesos físicos,
+                maquinaria o incluso la seguridad de las personas. Y ahí es
+                donde he sentido que mi camino, aunque no lo buscara
+                conscientemente, empezaba a tener sentido: la intersección entre
+                IT y OT que certifica el GICSP es, en el fondo, la misma que
+                llevo encima desde antes incluso de saber que existía la
+                ciberseguridad industrial.
+            </p>
+            <p>
+                Así que, como forma de aprendizaje hands-on antes de empezar con el
+                estudio formal del GICSP, decidí montar un pequeño laboratorio
+                casero: convertir un ESP32 en un PLC para entender, de primera mano,
+                cómo piensa y se comporta un sistema de control industrial.
+            </p>
+            <p>
+                En este primer blog, explicaré cómo escribí el primer programa
+                sencillo en lenguaje ladder desde OpenPLC Editor y lo subí al
+                ESP32.
+            </p>
+            <h2 class="subtitulo">Entendiendo OpenPLC</h2>
+            <p>
+                Basta con decir, por ahora, que OpenPLC es un software open source, gratuito
+                -"god bless open source!"- que nos permite programar PLCs.
+                Aparte, por si fuera poco eso, nos permite compilar programas en
+                los diferentes lenguajes de programación de PLCs contemplados en
+                el IEC 61131-3 en un ESP32 con previa instalación de una
+                librería.
+                En este caso, lo que hace OpenPLC es instalar en nuestro ESP32
+                un servidor llamado OpenPLC Runtime que ejecutará el programa
+                previamente programado de manera cíclica.  
+            </p>
+            <p>Desde su página web podéis descargar el software: <a style="color: red; text-decoration: underline;" href="https://autonomylogic.com/">OpenPLC</a></p>
+            
+            <h2 class="subtitulo">Manos a la obra</h2>
+            <p>
+                Bien, una vez introducido el software vamos manos a la obra. 
+                Lo primero que hice fue configurar la placa de
+                desarrollo dentro de OpenPLC. 
+            </p>
+            <figure>
+            <img class="imgRecurso" src="../assets/esp32_3.png"/>
+            <figcaption>Antes de nada descargué el pack de Espressif, donde se incluyen las librerías para el ESP32</figcaption>
+            </figure>
+            <img class="imgRecurso" src="../assets/esp32_4.png"/>
+            <img class="imgRecurso" src="../assets/esp32_5.png"/>
+            <figure>
+            <img class="imgRecurso" src="../assets/esp32_2.png"/>
+            <figcaption>Seleccioné el modelo de placa, el ESP32 DevKit V1</figcaption>
+            </figure>
+            <p>Una vez encontrado el modelo de placa, conecté el ESP32 al PC. En
+            mi caso, al trabajar con un S.O. Debian y un CP2102 como conversor
+            USB a UART integrado en el ESP32, no necesité la instalación de
+            drivers, ya que Debian los tiene de forma nativa.
+            </p>
+            <blockquote>
+                >> En algunos ESP32 el conversor es un chip CH340, en cuyo caso sí se necesitan drivers.
+                <p>Se pueden encontrar en el siguiente link: <a style="color: red; text-decoration: underline;" href="https://docs.sunfounder.com/projects/esp32-starter-kit/en/latest/faq/install_driver.html">SunFounder</a></p>
+            </blockquote>
+            <figure>
+            <img class="imgRecurso" src="../assets/esp32_16.png"/>
+            <figcaption>Seleccioné el puerto donde estaba conectado</figcaption>
+            </figure>
+            <p>La idea era realizar un programa en el lenguaje ladder lo más
+            simple posible, así que opté por hacer uno que consistiera en un par
+            de botones, uno de marcha y otro de paro, y un led que respondiera a
+            ellos. Más simple imposible.</p>
+            <p>A continuación establecí los pines que iba a utilizar; en mi caso fueron los siguientes: </p>
+            <ul style="text-align: justify; width: 100%;">
+                <li>Pin 32: Botón de marcha | Digital Input  | %IX0.0</li>
+                <li>Pin 33: Botón de paro   | Digital Input  | %IX0.1</li>
+                <li>Pin 25: Salida al led   | Digital Output | %QX0.0</li>
+            </ul>
+            <p>Este pineado lo trasladé a OpenPLC de la siguiente manera: </p>
+            <figure>
+            <img class="imgRecurso" src="../assets/esp32_7.png"/>
+            <figcaption>Dos inputs y un output</figcaption>
+            </figure>
+            <p>Una vez hecho el pineado, comencé a "escribir" el programa en ladder. Para ello creé un nuevo "rung".</p>
+            <img class="imgRecurso" src="../assets/esp32_8.png"/>
+            <p>Añadí los contactos desde el panel lateral de OpenPLC Editor: </p>
+            <img class="imgRecurso" src="../assets/esp32_9.png"/>
+            <p>El programa era muy sencillo: consistía en dos contactos en
+            serie que representan lógicamente los botones de marcha y paro, y a
+            continuación una bobina que representaba el led. A dicha bobina se
+            le realizó un enclavamiento para que el pulsador de marcha actuara
+            como un interruptor; esto se realizó simplemente con un tercer
+            contacto que tenía el mismo nombre que la carga y que estaba en
+            paralelo junto al contacto de marcha.
+            </p>
+            <img class="imgRecurso" src="../assets/esp32_10.png"/>
+            <figure>
+                <img class="imgRecurso" src="../assets/esp32_11.png">
+            <figcaption>El contacto de paro tenía un estado inicial NC (normalmente cerrado)</figcaption>
+            </figure>
+            <p>Una vez creado el programa establecí las variables: </p>
+            <ul style="text-align: justify; width: 100%;">
+                <li>START | INPUT | BOOL | %IX0.0 | 0</li>
+                <li>STOP | INPUT | BOOL | %IX0.1 | 0</li>
+                <li>LOAD | OUTPUT | BOOL | %QX0.0 | 0</li>
+            </ul>
+            <p>Que trasladé a OpenPLC de la siguiente manera: </p>
+            <img class="imgRecurso" src="../assets/esp32_17.png"/>
+            <p>Una vez había terminado el programa era hora de descargarlo en el ESP32: </p>
+            <figure>
+                <img class="imgRecurso" src="../assets/esp32_13.png"/>
+                <figcaption>En build options, borrar caché, descargar y compilar</figcaption>
+            </figure>
+            <p>Pero me dio error, demasiado fácil estaba siendo: </p>
+            <figure>
+                <img class="imgRecurso" src="../assets/esp32_18.png"/>
+                <figcaption>En el mensaje de error me decía que probara a agregar el usuario —mi usuario actual— al grupo dialout</figcaption>
+            </figure>
+            <pre><code class="language-bash">sudo usermod -a -G dialout enroot</code></pre>
+            <figure>
+                <img class="imgRecurso" src="../assets/esp32_19.png"/>
+                <figcaption>Comprobé que en efecto mi usuario se hubiera añadido al grupo</figcaption>
+            </figure>
+            <figure>
+                <img class="imgRecurso" src="../assets/esp32_20.png"/>
+                <figcaption>Y al fin pude subir mi programa al ESP32</figcaption>
+            </figure>
+            <p>Y hasta aquí esta fase del proyecto; en la fase número 2 mostraré cómo diseñé el circuito y cableé el ESP32 en una breadboard.
+                Espero que quien se haya tomado la molestia de haber llegado hasta aquí haya disfrutada tanto leyendo como yo haciendo el proyecto.
+                ¡Nos vemos a la próxima!
+            </p>
+
+            <p class="firma"><b>EnRoot</b></p>
+
+        </section>
+	</main>
+    <script src="../js/main.js"></script>
+</body>
+</html>
