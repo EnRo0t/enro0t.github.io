@@ -66,7 +66,7 @@ const headerContent = `
         <div class="flex-father">
             <nav class="flex-nav">
                 <a href="https://enro0t.github.io/index.html" class="menu-option"><b>HOME</b></a>
-                <a href="https://enro0t.github.io/images.html" class="menu-option"><b>IMÁGENES</b></a>
+                <a href="https://enro0t.github.io/imagenes.html" class="menu-option"><b>IMÁGENES</b></a>
                 <a href="https://enro0t.github.io/about.html" class="menu-option"><b>ABOUT</b></a>
             </nav>
         </div>
