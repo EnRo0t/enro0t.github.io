@@ -61,7 +61,7 @@ fetch("json/blog.json")
 const headerContent = `
         <div class="site-title">
             <img src="https://enro0t.github.io/assets/luci2.webp" style="width: 250px; height: 200px"/>
-					<a href="index.html"><h1>E N R 0 0 T <span class="asterisco">*</span></h1></a>
+					<a href="https://enro0t.github.io/index.html"><h1>E N R 0 0 T <span class="asterisco">*</span></h1></a>
         </div>
         <div class="flex-father">
             <nav class="flex-nav">

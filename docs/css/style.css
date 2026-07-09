@@ -167,11 +167,13 @@ main {
 		grid-template-columns: 1fr 9fr;
 		grid-template-rows: 1fr 5fr;
 		margin: 5px;
+		gap: 70px;
 		width: 70%;
 }
 
 .main-container aside {
 		grid-row: span 2; /* Le digo que aside ocupe 2 filas */
+		justify-items: start;
 		
 		ul {
 				margin-top: 0;
@@ -324,6 +326,24 @@ blockquote {
   padding: 20px;
   overflow-wrap: break-word; /* evita que palabras largas se salgan */
   word-wrap: break-word;
+}
+
+.hashtag {
+	text-align: right;
+	color: green;
+	font-weight: bold;
+}
+
+.fechaBlog {
+	font-weight: bold;
+}
+
+/* Contenedor con fecha y hashtag */
+.metaInfo {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	width: 100%;
 }
 
 /*-------------------------------------------------*/
