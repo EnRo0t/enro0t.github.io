@@ -354,12 +354,13 @@ blockquote {
 .about-container {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
-	gap: 40px;
+	gap: 1px;
 	justify-content: center;
+	width: 70%;
 }
 
 .about-container img {
-	width: 350px;
+	width: 250px;
 	height: auto;
 	border-radius: 50%;
 	margin: 0;
@@ -425,6 +426,7 @@ blockquote {
 		color: white;
 	}
 }
+
 
 /*-----------------------------------------------------------------*/
 /*						ABOUT-3DSPHERE							   */
