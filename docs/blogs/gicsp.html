@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Enoch Root">
+    <title>Blog personal EnRoot</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> <!-- MathJax Para formulas matemáticas -->
+</head>
+<body>
+    <header id="headerContainer">
+    </header>
+	<main>
+        <section class="blog-entrada">
+<img src="../assets/header_gicsp2.png"/>
+            <h1>Camino a la GICSP — Cap. 2: Diseñando el circuito</h1>
+            <div class="metaInfo">
+            <span class="fechaBlog">13-07-2026</span>
+            <span class="hashtag">#OTSecurity</span>
+            </div>
+            <hr style="width: 100%;">
+        <strong>¡Aviso! - Este es el capítulo 2 de una serie de blogs en los que explico cómo construí un laboratorio de automatización industrial con un esp32.
+                Si no has leído el primero te lo dejo aquí: <a href="https://enro0t.github.io/blogs/esp32.html" style="width: 100%;">Camino a la GICSP - Cap. 1</a>
+            </strong>
+            <p>En el capítulo anterior expliqué cómo convertí un ESP32 en un PLC
+            funcional y programado, mediante el software OpenPLC, con un simple
+            programa en lenguaje Ladder que consistía en encender y apagar un
+            led.</p> 
+            <p>El objetivo de estos laboratorios no es tanto el aprender un
+            lenguaje de programación PLC, sino comprender los protocolos que
+            hacen funcionar ICS -cómo se comunican los PLCs con unidades
+            centrales, cómo se conectan a la red, cómo operan protocolos de
+            comunicación como modbus TCP y Profinet-, aun así, durante el
+            transcurso de estos laboratorios también programaré tanto en Ladder
+            como en IL (Instruction Language), dos de los más importantes
+            lenguajes contemplados en el estándar IEC 61131-3.</p>
+            <p>Pero ahora vamos al grano, en este capítulo abordaré la etapa del
+            diseño de circuito y el posterior cableado. Será un capítulo mucho
+            más breve que el anterior, pero tal vez más entretenido.</p>
+            <p>Bien, hasta ahora teníamos un programa en ladder que consistía en
+            un botón de marcha, otro de paro y un led que se encendía y apagaba
+            en función de estos dos.</p>
+            <figure>
+            <img src="../assets/esp32_31.png"/>
+            <figcaption>El programa en cuestión</figcaption>
+            </figure>
+            <p>El circuito va a consistir en dos pulsadores, un led y 2 resistencias Pull Down para los pulsadores.</p>
+            <figure>
+                <img src="../assets/esp32_21.png"/>
+                <figcaption>Circuito diseñado en https://wokwi.com</figcaption>
+            </figure>
+            <p>Este circuito es muy sencillo: conecté el GND y la salida de 3.3V al negativo y positivo de la breadboard respectivamente.</p>
+            <p>Los 3.3V van directamente a las patillas de ambos pulsadores.</p>
+            <p>Después, de las entradas digitales 32 y 33 salen los cables que van directamente a las patillas restantes de los pulsadores, y de esas mismas patillas salen dos resistencias Pull Down.</p>
+            <blockquote>
+               >> Una resistencia de pull-down es una resistencia que conecta un
+                pin digital a GND (tierra), y su función es asegurar que, en
+                ausencia de una señal activa, el pin quede en un estado LOW (0V)
+                definido en lugar de quedar flotante. Sin ella, el pin podría
+                captar interferencias electromagnéticas del entorno y leer
+                valores erráticos o indeterminados. De esta forma, se garantiza
+                que la señal sea siempre un 0 o un 1 lógico claro y estable,
+                nunca un estado ambiguo.
+            </blockquote>
+            <p>Finalmente, del pin 25 sale un cable directamente al positivo del
+            led -ánodo en este caso- y del cátodo sale una resistencia
+            directamente a GND.</p>
+            <p>Bien, hecho el diseño, vamos a calcular los valores de resistencia que necesitamos.</p>
+            <p>Teniendo en cuenta que vamos a utilizar un led rojo y que su
+            tensión de funcionamiento es aproximadamente 2V y que necesita unos 0.02A para funcionar: </p>
+            <p>$$R = \frac{V_{fuente} - V_{led}}{I}$$</p>
+            <p>$$R = \frac{3.3 - 2}{0.02}$$</p>
+            <p>$$R = {65}\Omega$$</p>
+            
+            <p>Entonces tenemos que la resistencia que vamos a utilizar para el
+            led debe ser, como mínimo, de 65 Ohms. Como no tengo resistencias tan
+            bajas, pondremos una de 100 Ohms.</p>
+            <p>En cuanto a las resistencias Pull Down, cuando se trata de electrónica de tan baja tensión se suelen utilizar las de 10 KOhms.</p>
+            <p>Por lo tanto, nuestra lista de la compra queda así: </p>
+            <ul style="text-align: justify; width: 100%;">
+                <li>Resistencia 100 Ohms</li>
+                <li>2 Resistencias 10 KOhms</li>
+                <li>Led Rojo</li>
+                <li>2 Pulsadores</li>
+            </ul>
+            <p>Una vez diseñado el circuito, me puse manos a la obra y comencé a
+            cablear en la breadboard y a testear que todo funcionara
+            correctamente.</p>
+            <figure style="width: 30%;">
+                <img src="../assets/esp32_23.jpeg"/>
+                <figcaption>En esta captura muestro cómo el led se enciende al presionar el pulsador de marcha conectado al pin 32</figcaption>
+            </figure>
+            <figure style="width: 30%;">
+                <img src="../assets/esp32_22.jpeg"/>
+                <figcap>En esta otra muestro cómo el led se apaga presionando el pulsador de paro</figcap>
+            </figure>
+            <p>Y hasta aquí el capítulo 2, en la próxima contaré cómo conecté
+            este circuito a la red utilizando la placa wifi del esp32 y cómo,
+            mediante modbus TCP, controlé el sistema remotamente. También
+            <i>sniffearemos</i> la red para comprender cómo funciona dicho
+            protocolo por detrás con Wireshark.</p>
+            <p>¡Espero que os haya gustado y nos vemos a la próxima!</p>
+            <p class="firma"><b>EnRoot</b></p>
+
+        </section>
+	</main>
+    <script src="../js/main.js"></script>
+</body>
+</html>

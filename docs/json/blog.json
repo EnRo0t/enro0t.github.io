@@ -1,6 +1,13 @@
 [
 
 		{
+"fecha": "13-07-2026",
+"titulo": "Camino a la GICSP — Cap. 2: Diseñando el circuito",
+"filePath":"blogs/gicsp.html",
+"imgPath":"assets/GICSP_2.webp",
+"descripcion": "Segunda parte del proyecto 'Camino a la GICSP'. En esta parte explicaré como diseñe y cableé el circuito del ESP32 con un par de pulsadores y un led."
+		},
+		{
 "fecha": "09-07-2026",
 "titulo": "Camino a la GICSP — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)",
 "filePath":"blogs/esp32.html",
