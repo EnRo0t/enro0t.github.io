@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Enoch Root">
+    <title>Blog personal EnRoot</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" /> <!-- Para resaltar bloques de código -->
+</head>
+<body>
+    <header id="headerContainer">
+    </header>
+	<main>
+        <section class="blog-entrada">
+<img src="../assets/header_gicsp3.webp"/>
+            <h1>Camino a la GICSP — Cap. 3: Entendiendo Modbus TCP</h1>
+            <div class="metaInfo">
+            <span class="fechaBlog">20-07-2026</span>
+            <span class="hashtag">#OTSecurity</span>
+            </div>
+            <hr style="width: 100%;">
+      <strong>¡Aviso! - Este es el capítulo 3 de una serie de blogs en los que explico cómo construí un laboratorio de automatización industrial con un ESP32.
+    Si no has leído las entradas anteriores te las dejo aquí: <a href="https://enro0t.github.io/blogs/esp32.html" style="width: 100%;">Camino a la GICSP - Cap. 1</a>
+    | <a href="https://enro0t.github.io/blogs/gicsp.html" style="width: 100%;">Camino a la GICSP - Cap. 2</a>
+</strong>
+
+<p>En los capítulos anteriores expliqué cómo había programado un 
+<b>ESP32</b> a modo de <b>PLC</b> y cómo, mediante el software de código abierto OpenPLC Editor, 
+le había cargado un programa en Ladder a modo de prueba.</p>
+
+<p>También expliqué cómo diseñé y cableé un circuito simple que consistía en un par de pulsadores y un led.</p>
+
+<p>La entrada de hoy es un poco más interesante. Partiendo del 
+laboratorio creado anteriormente, voy a explicar cómo conecté el 
+ESP32 a la red utilizando su módulo Wi-Fi y cómo, mediante OpenPLC 
+Runtime, envié comandos mediante el protocolo Modbus TCP. También 
+vamos a destripar el protocolo mediante la herramienta Wireshark y ver qué secretos esconde, espero 
+que os guste.</p>
+
+<hr style="width: 100%;">
+
+<p>En el <b>ESP32 devkit1</b>, el modelo que he estado utilizando para el 
+laboratorio, el módulo que se encarga de proporcionarnos conectividad Wi-Fi —y
+Bluetooth— es el ESP-WROOM-32 y este solo funciona con frecuencias de 2.4 GHz.
+Por lo tanto, para esta fase del laboratorio tuve que conectarme a la
+configuración del router y desactivar el <i>band steering</i>, que básicamente
+lo que hace es ofrecer la banda de mayor velocidad a los endpoints que tratan de
+conectarse; en el caso de mi router, simplemente fusiona la banda de 2.4 GHz con
+la de 5Ghz, mostrando un único SSID.</p>
+<figure>
+<img src="../assets/esp32_24.png">
+</figure>
+<p>A continuación, descargué <b>OpenPLC Runtime</b> desde su sitio web: <a style="color: red; text-decoration: underline;" href="https://autonomylogic.com/runtime">OpenPLC runtime</a></p>
+
+<p>
+    Este software de control industrial de código abierto 
+    actúa como el cerebro de un PLC, permitiendo convertir 
+    plataformas como un PC, una <b>Raspberry Pi</b> o un <b>ESP32</b> en un 
+    <b>PLC</b>.
+</p>
+
+<p>
+    A diferencia de <b>OpenPLC Editor</b> —que utilizamos previamente para 
+    crear los programas en los lenguajes de programación estándar de 
+    PLC—, el Runtime es un motor sin interfaz gráfica (headless). En 
+    este laboratorio lo utilizaremos como el <b>PLC</b> 'maestro' 
+    encargado de ejecutar la lógica de control y comandar a nuestro 
+    <b>ESP32</b>, el cual funcionará como un dispositivo esclavo o de E/S 
+    remotas.
+</p>
+
+<p>Un apunte para entender mejor la arquitectura del laboratorio: 
+cuando cargamos el programa hacia el <b>ESP32</b> desde el Editor, lo 
+que realmente hicimos fue compilar e instalar un firmware específico 
+que convierte al microcontrolador en un dispositivo periférico 
+esclavo que ejecuta un programa en Ladder de manera cíclica.</p>
+
+<p>Bien, una vez descargado e instalado, inicié la instancia en mi PC:</p>
+
+<pre><code class="language-bash">sudo systemctl start openplc-runtime.service</code></pre>
+
+<p>A continuación, desde la <b>interfaz de OpenPLC Editor</b>, configuré el parámetro del <b>ESP32</b> para que pudiera recibir comunicaciones mediante el protocolo <b>Modbus TCP</b>.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_25.png"/>
+    <figcaption>Configuración de red</figcaption>
+</figure>
+
+<p>Y cambié el dispositivo en la configuración a la instancia de <b>OpenPLC Runtime v4</b>.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_26.png">
+    <figcaption>Configuración del dispositivo</figcaption>
+</figure>
+
+<p>Y finalmente añadí el <b>ESP32</b> como esclavo en el panel.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_27.png">
+    <figcaption>Configuración de dispositivos remotos</figcaption>
+</figure>
+
+<p>Dentro de la configuración de dispositivos remotos, le asigné la 
+IP, el puerto, el ID de esclavo —esto se explica en más detalle más 
+adelante— e hice el mapeo de entradas y salidas.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_28.png">
+    <figcaption>Mapeo de entradas y salidas</figcaption>
+</figure>
+
+<p>En este apartado se realiza el mapeo de variables, asignando las 
+direcciones de memoria internas del <b>PLC</b> maestro (como %IX0.0 para 
+entradas digitales y %QX0.0 para salidas digitales) a las funciones 
+<b>Modbus TCP</b> específicas que interactuarán de forma remota con los 
+pines físicos del <b>ESP32.</b></p>
+
+<p>Una vez asociadas estas variables, lo que hice fue poner a 
+<i>debuggear</i> todas ellas, para poder interactuar con el entorno 
+y cambiar sus estados.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_29.png">
+    <figcaption>Mapa de Variables</figcaption>
+</figure>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_30.png">
+    <figcaption>Debugger</figcaption>
+</figure>
+
+<p>Ahora podía cambiar el valor de las variables desde el debugger y 
+enviar estas órdenes desde mi instancia en <b>OpenPLC Runtime</b>, es 
+decir, desde mi PLC maestro al <b>ESP32</b>, el esclavo.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_32.png">
+    <figcaption>Cambiando de estado las variables controlo el PLC de manera remota</figcaption>
+</figure>
+
+<p>Entonces, si por ejemplo cambiaba de valor la variable 
+<b>START</b> con un <b>TRUE</b>, el led se encendía.</p>
+
+<p>
+    Una vez establecida la conexión del ESP32 a la red local y 
+    configurado exitosamente como un dispositivo esclavo supeditado 
+    al PLC maestro —representado por la instancia de OpenPLC Runtime 
+    en el PC—, el siguiente objetivo consistió en analizar el 
+    comportamiento del protocolo Modbus TCP. Para ello, utilicé 
+    la herramienta de análisis de red <b>Wireshark</b> con el fin de 
+    capturar el tráfico de datos y examinar la estructura interna de 
+    los paquetes de comunicación.
+</p>
+
+<h3 style="width: 100%;">Entendiendo Modbus TCP</h3>
+
+<p>Inicié Wireshark en mi interfaz de red:</p>
+
+<pre><code class="language-bash">sudo wireshark -i enp9s0</code></pre>
+
+<p><b>Wireshark</b> es una herramienta muy potente que nos permite filtrar por innumerables parámetros: puerto, IP, protocolos, etc.</p>
+
+<p>En mi caso, simplemente me interesaba filtrar por el protocolo Modbus.</p>
+
+<p>Una vez inicié el escaneo, empezaron a llegar tramas de 
+comunicación en ambas direcciones: desde el maestro, representado 
+por la IP 192.168.0.16, hasta el esclavo, con la IP 192.168.0.17.</p> 
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_33.png">
+    <figcaption>Tramas 2 y 3 capturadas por Wireshark</figcaption>
+</figure>
+
+<p>En estas tramas capturadas por <b>Wireshark</b> se podía apreciar 
+el ciclo de pregunta y respuesta de <b>Modbus TCP.</b></p> 
+
+<p>Este ciclo de pregunta-respuesta es típico de arquitecturas 
+cliente-servidor o maestro-esclavo.</p> 
+
+<p>Esto asegura que en un entorno crítico —como puede ser el industrial— el maestro siempre 
+sepa el estado del esclavo.</p>
+
+<p>Vamos a analizar cada una de las tramas de la imagen de arriba 
+para comprender mejor el protocolo de comunicación.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_34.png">
+    <figcaption>Columna de Wireshark donde se nos muestra el origen y el destino de la trama</figcaption>
+</figure>
+
+<p>Vamos a comenzar analizando la trama nº 2, la pregunta que realiza el máster al esclavo.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_35.png">
+    <figcaption>Vista en detalle de la trama nº 2</figcaption>
+</figure>
+
+<p>En Wireshark las tramas se dividen según el modelo OSI; al 
+analizar en detalle la trama podemos ver cómo se nos muestra cada 
+una de las capas de dicho modelo.</p>
+
+<blockquote>
+    &gt;&gt; Antes de continuar, consideré conveniente analizar las 
+    diferencias entre Modbus TCP y Modbus RTU (la versión original 
+    en serie). Fundamentalmente, Modbus TCP encapsula la trama de 
+    datos de Modbus RTU dentro de un paquete TCP/IP para ser 
+    transmitido a través de redes Ethernet o Wi-Fi, en lugar de 
+    utilizar un bus de comunicación serie tradicional. Debido a 
+    esto, los dispositivos se identifican principalmente mediante su 
+    dirección IP dentro de la red local, delegando el clásico 
+    identificador de esclavo (Slave ID o Unit Identifier) a un rol 
+    secundario para la compatibilidad con pasarelas industriales.
+</blockquote>
+
+<p>En esta entrada del blog no me voy a detener en analizar cada una 
+de las capas que nos ofrece <b>Wireshark</b>; solo me voy a centrar 
+en las capas propias de Modbus (las de aplicación).</p> 
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_36.png">
+    <figcaption>Cabecera MBAP</figcaption>
+</figure>
+
+<p>En la imagen de arriba se puede observar la cabecera MBAP de una trama <b>Modbus TCP</b>.</p>
+
+<p>Esta cabecera consta de 7 bytes que contienen la siguiente información:</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_37.png">
+    <figcaption>Cabecera MBAP en detalle</figcaption>
+</figure>
+
+<ul style="text-align: justify; width: 100%;">
+    <li><b>Transaction Identifier (2 bytes):</b> ID del mensaje (para emparejar pregunta/respuesta).</li>
+    <li><b>Protocol Identifier (2 bytes):</b> Siempre es 00 00 (significa Modbus).</li>
+    <li><b>Length (2 bytes):</b> Cuántos bytes vienen a continuación.</li>
+    <li><b>Unit Identifier (1 byte):</b> El "ID de esclavo" (tradicional de Modbus RTU, en TCP suele ser 01 o FF).</li>
+</ul>
+
+<blockquote>
+    &gt;&gt; <b>Unit Identifier:</b> Heredado del "ID de esclavo" 
+    tradicional de Modbus RTU. En conexiones directas Modbus TCP de 
+    punto a punto (como en nuestro laboratorio), la identificación 
+    del dispositivo ya se realiza mediante la dirección IP en la 
+    capa de red, por lo que este campo suele fijarse por defecto en 
+    01 o FF. Sin embargo, sigue siendo fundamental en entornos 
+    industriales para permitir que los gateways enruten 
+    los paquetes desde una red Ethernet TCP hacia dispositivos 
+    específicos en una red serie. Básicamente, retrocompatibilidad.
+</blockquote>
+
+<p>Una vez visto el header, vamos a ver la PDU (Protocol Data Unit) representada por 5 bytes.</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_38.png">
+    <figcaption>PDU</figcaption>
+</figure>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_38-1.png">
+    <figcaption>PDU en detalle</figcaption>
+</figure>
+
+<p>En el bloque de la PDU podemos observar 3 campos principales:</p>
+
+<ul style="text-align: justify; width: 100%;">
+    <li>
+        <b>Function Code (1 byte):</b> Este byte dice qué hacer. En 
+        nuestro caso, está tratando de leer el input digital del 
+        PLC —función 02—. Existen varias funciones, entre ellas:
+        <ul>
+            <li>01 - Read Coil Status</li>
+            <li style="background-color: rgba(204,255,0,0.6); width: 25%;"><b>02 - Read Discrete Input</b></li>
+            <li>03 - Read Holding Registers</li>
+            <li>04 - Read Input Registers</li>
+            <li>05 - Write Single Coil</li>
+            <li>06 - Preset Single Register</li>
+            <li>15 - Force Multiple Coils</li>
+            <li>16 - Preset Multiple Registers</li>
+            <li>17 - Report Slave ID</li>
+        </ul>
+    </li>
+    <li>
+        <b>Reference Number / Reference Address (2 bytes):</b> 
+        Aquí está la dirección; son dos bytes que indican la 
+        posición exacta de memoria en el ESP32 a la que intenta 
+        acceder el máster.
+        <ul>
+            <li>Para IX0.1 (dirección 1) sería: 00 01</li>
+            <li>Si fuera la dirección 10, sería: 00 0a</li>
+        </ul>
+    </li>
+    <li><b>Bit count:</b> Indica, literalmente, cuántos bits consecutivos quiere leer o escribir el máster a partir de la dirección inicial.</li> 
+</ul>
+
+<p>Si ahora nos vamos a la trama de respuesta podremos entender mejor esta última parte:</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_39.png">
+    <figcaption>Trama nº 2 - Respuesta</figcaption>
+</figure>
+
+<p>El campo <b>Bit count</b> de la trama del máster nos indicaba que este 
+trataba de leer 1 bit del esclavo referente a su input digital, y en 
+la respuesta se nos muestra ese bit con un 0 que representa falso. 
+Es decir, el maestro pregunta al esclavo si su pin digital X está 
+activo y este le contesta que no.</p>
+
+<p>
+    Si ahora forzáramos de forma virtual a TRUE (1) la dirección 
+    %IX0.0 (nuestra entrada digital), la lógica de enclavamiento del 
+    programa Ladder se activará, conmutando la salida '%QX0.0' y 
+    provocando que el máster envíe una orden de escritura (Función 
+    5) para encender el LED físico.
+</p>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_40.png">
+    <figcaption>Tramas de pregunta-respuesta con función 05</figcaption>
+</figure>
+
+<figure>
+    <img class="imgRecurso" src="../assets/esp32_41.png">
+    <figcaption>Trama en detalle - Orden del máster</figcaption>
+</figure>
+
+<p>En este caso, vemos que la función 5 cambia la estructura de la PDU dándonos campos específicos:</p>
+
+<ul style="text-align: justify; width: 100%;">
+    <li><b>Output Address (2 bytes):</b> La dirección física de la salida que queremos conmutar.</li>
+    <li><b>Data / Write Value (2 bytes):</b> El estado que el máster quiere asignar a esa dirección:
+        <ul>
+            <li style="background-color: rgba(204,255,0,0.6); width: 25%;">FF 00 para activar (ON)</li>
+            <li>00 00 para desactivar (OFF)</li>
+        </ul>
+    </li>
+</ul>
+
+<blockquote>
+    &gt;&gt; <b>Nota sobre el Padding:</b> Verás que Wireshark añade una sección de "Padding" al final del paquete. Esto no pertenece a Modbus, sino a la capa de enlace (Ethernet). El estándar exige que las tramas tengan un tamaño mínimo de 64 bytes, por lo que la tarjeta de red añade bytes de relleno para alcanzar esa longitud en mensajes tan cortos.
+</blockquote>
+
+<p>Y hasta aquí el capítulo de hoy. Hemos visto como crear una red Modbus con OpenPLC y hemos indagado un poco con Wireshark en el protocolo para entender un poco más de él.</p>
+<p>Antes de despedirme quisiera hacer unos apuntes: Para quien quiera
+experimentar con <b>Modbus</b> TCP e indagar por su cuenta, no es necesario armar tanto
+jaleo como he hecho yo, existen simuladores de Modbus como <a style="color: red;
+text-decoration: underline;"
+href="https://www.modbusdriver.com/modpoll.html">Modpoll</a>, que te permiten,
+emular una comunicación <b>Modbus TCP.</b></p>
+<p>Otro apunte más es que durante el artículo hablo constantemente de
+maestro-esclavo, esta nomenclatura es "antigua" y se utiliza más comúnmente en
+la versión RTU de Modbus, Modbus TCP es una arquitectura cliente-servidor, asi
+que no sería correcto llamarlo maestro-esclavo.</p>
+<p>En el próximo capítulo mi intención es complicar un poco las cosas, conectaremos un par de PLCs más al sistema y ulitizaremos un software SCADA libre como es <a style="color: red; text-decoration: underline;" href="https://scadabr.org/">SCADA BR</a> para llevar el comando y control de manera
+centralizada. También exploraremos la herramienta <b>NMAP</b> en estos entornos
+y veremos como se puede atacar una red industrial, se viene lo bueno.</p>
+<p>Y hasta aquí, espero que hayaís disfrutado de la lectura tanto como yo de esta inmersión en el protocolo <b>Modbus TCP</b> y hasta la próxima.</p>
+            <p class="firma"><b>EnRoot</b></p>
+
+        </section>
+	</main>
+    <script src="../js/main.js"></script>
+</body>
+</html>

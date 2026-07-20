@@ -1,6 +1,13 @@
 [
 
 		{
+"fecha": "20-07-2026",
+"titulo": "Camino a la GICSP — Cap. 3: Entendiendo Modbus TCP",
+"filePath":"blogs/gicsp2.html",
+"imgPath":"assets/GICSP3.webp",
+"descripcion": "Tercera parte del proyecto 'Camino a la GICSP'. En este capítulo conectamos nuestro PLC casero a una red Modbus TCP y exploramos el protocolo mediante la herramienta Wireshark."
+		},
+		{
 "fecha": "13-07-2026",
 "titulo": "Camino a la GICSP — Cap. 2: Diseñando el circuito",
 "filePath":"blogs/gicsp.html",
