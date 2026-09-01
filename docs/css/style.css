@@ -18,12 +18,14 @@
 }
 
 body {
-		/*background-color: var(--color-primary);*/
-		background-image: url(../assets/background-3.webp);
-		background-size: cover;
-		margin: 0;
-		padding: 0;
-}
+background-image: url('../assets/background-3.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;}
 
 .flex-father {
 		display: flex;
