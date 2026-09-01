@@ -1,5 +1,12 @@
 [
-
+		
+		{
+"fecha": "01-09-2026",
+"titulo": "Filmster - Un proyecto en de programación en C++",
+"filePath":"blogs/filmster.html",
+"imgPath":"assets/filmster_header.webp",
+"descripcion": "Cuento los porqués del desarrollo de un proyecto de programación en C++ consistente en un software para registrar películas en una base de datos local con capacidad de exportación a formato Markdown."		
+		},
 		{
 "fecha": "20-07-2026",
 "titulo": "Camino a la GICSP — Cap. 3: Entendiendo Modbus TCP",

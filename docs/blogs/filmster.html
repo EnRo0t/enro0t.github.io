@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Enoch Root">
+    <title>Blog personal EnRoot</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="headerContainer">
+    </header>
+	<main>
+        <section class="blog-entrada">
+<img src="../assets/filmster_header.webp"/>
+            <h1>Filmster - Un proyecto de programación en C++</h1>
+            <div class="metaInfo">
+            <span class="fechaBlog">01-09-2026</span>
+            <span class="hashtag">#Programacion</span>
+            </div>
+            <hr style="width: 100%;">
+					<p>Hace tiempo que programo, empecé con Java durante la FP
+					de desarrollo de aplicaciones web donde aprendí las bases
+					de programación, orientación a objetos, variables,
+					estructuras de control, algoritmos, etc. Me encantaba Java
+					a pesar de ser tan *verbose* y estricto y a pesar de sus
+					horribles IDEs, pero reconozco tiempo después que fue un
+					gran lenguaje en el que iniciarme. Gracias a empezar con él
+					entiendo perfectamente algunos conceptos que si hubiera
+					empezado con lenguajes de más alto nivel como Python me
+					hubiera costado entender. Después continuamos con
+					JavaScript para el frontend y PHP con Laravel para el
+					backend, y ambos fueron realmente interesantes y reforzaron
+					todo aquello que ya conocía. Yo venía de trastear con la
+					ciberseguridad y más concretamente con el pentesting, así
+					que eran dos lenguajes que había visto mucho del lado del
+					atacante en pentesting web. </p>
+		<p>Pero había un lenguaje clásico que siempre tenía en la cabeza, había
+		oído hablar de él toda la vida y gran parte del software que utilizaba
+		en mi día a día estaba programado en él, desde mis herramientas de
+		pentesting a mis videojuegos favoritos, incluso software embebido en
+		mis aparatos electrónicos. Ese lenguaje era C y C++, así que pensé:
+		¿por qué no pasas unos días aprendiendo la sintaxis, simplemente vas a
+		W3Schools, tomas notas sobre ello en tu Obsidian y cuando tengas una
+		base, te pones a realizar algún proyectillo divertido? Y eso hice. </p>
+		<p>
+		Me empujaban principalmente 3 motivos para aprender C++: 
+			<ul>
+					<li>Aprender en profundidad un lenguaje que me permitiera entender mejor la gestión de la memoria.</li>
+					<li>Aprender un lenguaje que también pudiera aplicar a sistemas embebidos.</li>
+					<li>Escapar del AI-Dooming</li>
+			</ul>
+			<blockquote>
+					>> Explico este último punto. La IA es una herramienta
+					fantástica, pero si estás aprendiendo programación,
+					redes, sistemas, ciberseguridad o lo que sea, utilizarla
+					correctamente es fundamental.
+					La IA puede ayudarte a entender cosas mejor, es
+					realmente buena explicando conceptos complejos, pero si
+					la utilizas para "no pensar", es un desastre.
+						Dicho esto, considero que antes de utilizar agentes y
+						demás, uno debe aprender bien los fundamentos y bases de la
+						programación, enfrentarse a problemas reales, hacer
+						funcionar la cabeza durante un tiempo; entrenar
+						básicamente.
+					Puede que la IA vuelva inútiles muchas funciones que
+					hoy en día aprendemos, pero dejar de aprenderlas es un
+					error. 
+			</blockquote>
+		</p>
+		<p>
+			Pues bien, llegados aquí toca contar de qué trata mi proyecto.
+			Se llama <b>Filmster</b> y simplemente es un registrador de
+			películas que te permite exportar en formato Markdown una lista
+			de películas. 
+		</p>
+		<p>
+			No va a revolucionar el mundo tecnológico y seguramente su
+			repositorio solo lo visite yo, pero llevo unas semanas
+			desarrollándolo y, sinceramente, me lo estoy pasando en grande y
+			me ha enseñado a tener un nivel base bastante decente en C++,
+			así que por lo pronto, objetivo cumplido.
+		</p>
+		<p>
+			Con este proyecto he aprendido gestión de memoria con punteros,
+			estructuras de datos como vectores, arrays, maps; cómo
+			gestionar archivos, abrirlos, modificarlos, borrarlos, crear
+			directorios... También he aprendido a hacer llamadas a una API
+			con la librería CPR, gestionar una base de datos local con
+			JSON, gestionar dependencias con CMake; en fin, lo básico. Todo
+			esto lo sabía hacer en Java, pero me ha alegrado ver que
+			trasladar ese conocimiento de un lenguaje al otro ha sido tan
+			sencillo. 
+		</p>
+		<p>
+		   A continuación muestro las funciones principales del software. 
+		</p>
+		<figure>
+		<img src="../assets/filmster1.gif"/>
+		<figcaption>Registro de una película</figcaption>
+		</figure>
+		<p>Cada película se representa como un objeto de la clase
+				<b>Pelicula</b>. Al crearse, se persiste en un archivo JSON que
+				actúa como base de datos local. Al iniciar la función
+				<code>main</code>, el sistema lee este JSON para poblar un
+				vector de objetos <b>Pelicula</b>, evitando que las demás
+				funciones interactúen directamente con la base de datos.</p>
+		<figure>
+		<img src="../assets/filmster2.gif"/>
+		<figcaption>Visualización de las películas registradas y modificación</figcaption>
+		</figure>
+		<p>Para consultar o modificar las películas, el sistema opera
+		directamente sobre el vector en memoria, garantizando una respuesta
+		rápida por consola y sincronizando los cambios con el JSON.</p>
+		<figure>
+		<img src="../assets/filmster3.gif"/>
+		<figcaption>Exportar lista de películas a markdown</figcaption>
+		</figure>
+		<figure>
+		<img src="../assets/filmster4.gif"/>
+		<figcaption>Muestra del resultado de la exportación</figcaption>
+		</figure>		
+		<p>
+			Como he dicho, el programa es un proyecto para aprender las
+			bases de C++ y no pretende ser perfecto ni innovador, pero poco
+			a poco lo voy a ir puliendo para mejorar su aspecto y tengo una
+			serie de mejoras ya pensadas y que he añadido al roadmap que se
+			contempla en el README del proyecto. 
+		</p>
+		<p>
+			Entre las mejoras están la de añadir una GUI para aprender cómo
+			gestionar ventanas gráficas en C++, añadir exportaciones a otro
+			tipo de formatos como PDF, que se exporte la imagen de portada
+			en local y pulir errores de lógica y optimización.     
+		</p>
+		<p>
+		   Llegados a este punto puedo decir que me encanta programar con C++,
+		   un lenguaje que sin duda seguiré investigando y con el que voy a
+		   realizar futuros proyectos.
+		</p>
+		<p>
+		Podéis encontrar el repositorio de código en mi GitHub: <a href="https://github.com/EnRo0t/Filmster">Aquí</a>.
+		</p>
+		<p>
+			¡Gracias por leer y hasta la próxima!
+		</p>
+            <p class="firma"><b>EnRoot</b></p>
+
+        </section>
+	</main>
+    <script src="../js/main.js"></script>
+</body>
+</html>
