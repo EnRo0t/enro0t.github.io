@@ -167,7 +167,7 @@ main {
 .main-container {
 		display: grid;
 		grid-template-columns: 1fr 9fr;
-		grid-template-rows: 1fr 5fr;
+		grid-template-rows: auto auto;
 		margin: 5px;
 		gap: 70px;
 		width: 70%;
