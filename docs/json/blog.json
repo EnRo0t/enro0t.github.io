@@ -4,7 +4,7 @@
 "fecha": "01-09-2026",
 "titulo": "Filmster - Un proyecto de programación en C++",
 "filePath":"blogs/filmster.html",
-"imgPath":"assets/cpp.webp",
+"imgPath":"assets/filmster.png",
 "descripcion": "Cuento los porqués del desarrollo de un proyecto de programación en C++ consistente en un software para registrar películas en una base de datos local con capacidad de exportación a formato Markdown."		
 		},
 		{
