@@ -359,6 +359,7 @@ blockquote {
 	gap: 1px;
 	justify-content: center;
 	width: 70%;
+	margin-bottom: 3rem;
 }
 
 .about-container img {
@@ -372,6 +373,29 @@ blockquote {
 	width: 85%;
 }
 
+.estado {
+		margin-top: 50px;
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 50px;
+		justify-content: center;
+		width: 100%;
+}
+
+.info-container {
+		border: 2px double white;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+}
+
+.actualizacion {
+		margin-top: auto;
+		text-align: right;
+		color: var(--color-accent);
+}
 
 .hacker {
 	background: linear-gradient(#1dbb08,#127505);
