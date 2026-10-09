@@ -1,6 +1,13 @@
 [
 		
 		{
+"fecha": "10-10-2026",
+"titulo": "Sitges 2026 día 1 - Her Private Hell",
+"filePath":"blogs/herprivate.html",
+"imgPath":"assets/herprivate.webp",
+"descripcion": "Te cuento como ha sido el primer día en el festival de cine fántastico de Sitges de este año con el estreno de la nueva película de Nicolas Winding Refn, Her private Hell."		
+		},
+		{
 "fecha": "01-09-2026",
 "titulo": "Filmster - Un proyecto de programación en C++",
 "filePath":"blogs/filmster.html",
