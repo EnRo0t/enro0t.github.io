@@ -23,24 +23,24 @@
 		},
 		{
 "fecha": "20-07-2026",
-"titulo": "Camino a la GICSP — Cap. 3: Entendiendo Modbus TCP",
-"filePath":"blogs/gicsp2.html",
-"imgPath":"assets/GICSP3.webp",
-"descripcion": "Tercera parte del proyecto 'Camino a la GICSP'. En este capítulo conectamos nuestro PLC casero a una red Modbus TCP y exploramos el protocolo mediante la herramienta Wireshark."
+"titulo": "Laboratorio de automatización industrial — Cap. 3: Entendiendo Modbus TCP",
+"filePath":"blogs/esp32-3.html",
+"imgPath":"assets/cover-esp32-3.webp",
+"descripcion": "Tercera parte del proyecto 'Laboratorio de automatización industrial'. En este capítulo conectamos nuestro PLC casero a una red Modbus TCP y exploramos el protocolo mediante la herramienta Wireshark."
 		},
 		{
 "fecha": "13-07-2026",
-"titulo": "Camino a la GICSP — Cap. 2: Diseñando el circuito",
-"filePath":"blogs/gicsp.html",
-"imgPath":"assets/GICSP_2.webp",
-"descripcion": "Segunda parte del proyecto 'Camino a la GICSP'. En esta parte explicaré como diseñe y cableé el circuito del ESP32 con un par de pulsadores y un led."
+"titulo": "Laboratorio de automatización industrial — Cap. 2: Diseñando el circuito",
+"filePath":"blogs/esp32-2.html",
+"imgPath":"assets/cover-esp32-2.webp",
+"descripcion": "Segunda parte del proyecto 'Laboratorio de automatización industrial'. En esta parte explicaré como diseñe y cableé el circuito del ESP32 con un par de pulsadores y un led."
 		},
 		{
 "fecha": "09-07-2026",
-"titulo": "Camino a la GICSP — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)",
+"titulo": "Laboratorio de automatización industrial — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)",
 "filePath":"blogs/esp32.html",
-"imgPath":"assets/GICSP.webp",
-"descripcion": "Proyecto personal en el que conecto un ESP32 a OpenPLC y desarrollo un programa en lenguaje ladder, como práctica hands-on dentro de mi preparación para la certificación GICSP (Global Industrial Cyber Security Professional). Primera entrega de una serie donde iré explorando protocolos y conceptos industriales básicos (Modbus, arquitecturas ICS/SCADA, etc.) desde un enfoque práctico."
+"imgPath":"assets/cover-esp32.webp",
+"descripcion": "Proyecto personal en el que conecto un ESP32 a OpenPLC y desarrollo un programa en lenguaje ladder. Primera entrega de una serie donde iré explorando protocolos y conceptos industriales básicos (Modbus, arquitecturas ICS/SCADA, etc.) desde un enfoque práctico."
 		},
 		{
 "fecha": "31-05-2026",

@@ -15,190 +15,275 @@
     </header>
 	<main>
         <section class="blog-entrada">
-<img src="../assets/header_gicsp.webp"/>
-            <h1>Camino a la GICSP — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)</h1>
-            <div class="metaInfo">
-            <span class="fechaBlog">09-07-2026</span>
-            <span class="hashtag">#OTSecurity</span>
-            </div>
-            <hr style="width: 100%;">
-            <p> Hace unos tres años que estoy dentro del mundo de la
-            ciberseguridad, primero como estudiante y después como profesional.
-            Durante este tiempo he ido aprendiendo fundamentos de redes,
-            sistemas, protocolos, programación, scripting y un largo etcétera de
-            habilidades y conocimientos. Pero en realidad, mi deriva hacia la
-            ciberseguridad empezó como una simple curiosidad profesional. Antes
-            de esto, había trabajado como técnico electricista en sectores muy
-            distintos —industrial, civil e incluso naval— y en todos ellos
-            siempre había un componente, aunque pequeño, relacionado con la
-            informática. Lo que empezó como una forma de ganar autonomía frente
-            a lo que no sabía, pronto se convirtió en un interés genuino por
-            descubrir todo lo que aquel nuevo mundo tenía para ofrecerme.
-            </p>
-            <p> Durante el último año he estado casi enteramente centrado en IT:
-            me saqué la certificación eJPT, terminé el penúltimo curso de DAW —a
-            falta de dos asignaturas para acabarlo— y hace poco entré en mi
-            primer trabajo de ciberseguridad como técnico de sistemas. Conocer
-            el sector desde dentro me ha ayudado a entender mi sitio y mi rol. Y
-            tras darle muchas vueltas, he llegado a una conclusión: mi perfil
-            híbrido —informático y electricista— no es nada despreciable. Uno no
-            sustituye al otro; existe entre ambos una sinergia muy interesante.            
-            </p>
-            <p>
-                Por eso, mi siguiente paso natural es juntar estos dos mundos, y
-                no se me ocurre mejor forma de hacerlo que especializándome en
-                ciberseguridad industrial. Ahí es donde entra el <strong>GICSP</strong>: quiero
-                estudiarlo a fondo, pero antes de sumergirme en la teoría,
-                sentía que me faltaba dar un buen repaso práctico a los sistemas
-                industriales.
-            </p>
-            <blockquote>
-            
-                >> 
-                El GICSP (Global Industrial Cyber Security Professional) es una
-                certificación de GIAC enfocada en la seguridad de sistemas de
-                control industrial (ICS) y tecnología operacional (OT). A
-                diferencia de la mayoría de certificaciones de ciberseguridad,
-                centradas en el mundo IT, el GICSP nace para cubrir un terreno
-                distinto: el de las plantas industriales, donde conviven PLCs,
-                SCADA, sensores y redes que no siempre siguen las mismas reglas
-                que un entorno IT tradicional.
-                
-            </blockquote>
-            <p>
-                Por eso está pensada precisamente para un perfil híbrido: no
-                basta con saber de ciberseguridad, también hay que entender cómo
-                funcionan físicamente estos sistemas —ingeniería,
-                automatización, protocolos industriales— porque en OT un fallo
-                no solo compromete datos, puede comprometer procesos físicos,
-                maquinaria o incluso la seguridad de las personas. Y ahí es
-                donde he sentido que mi camino, aunque no lo buscara
-                conscientemente, empezaba a tener sentido: la intersección entre
-                IT y OT que certifica el GICSP es, en el fondo, la misma que
-                llevo encima desde antes incluso de saber que existía la
-                ciberseguridad industrial.
-            </p>
-            <p>
-                Así que, como forma de aprendizaje hands-on antes de empezar con el
-                estudio formal del GICSP, decidí montar un pequeño laboratorio
-                casero: convertir un ESP32 en un PLC para entender, de primera mano,
-                cómo piensa y se comporta un sistema de control industrial.
-            </p>
-            <p>
-                En este primer blog, explicaré cómo escribí el primer programa
-                sencillo en lenguaje ladder desde OpenPLC Editor y lo subí al
-                ESP32.
-            </p>
-            <h2 class="subtitulo">Entendiendo OpenPLC</h2>
-            <p>
-                Basta con decir, por ahora, que OpenPLC es un software open source, gratuito
-                -"god bless open source!"- que nos permite programar PLCs.
-                Aparte, por si fuera poco eso, nos permite compilar programas en
-                los diferentes lenguajes de programación de PLCs contemplados en
-                el IEC 61131-3 en un ESP32 con previa instalación de una
-                librería.
-                En este caso, lo que hace OpenPLC es instalar en nuestro ESP32
-                un servidor llamado OpenPLC Runtime que ejecutará el programa
-                previamente programado de manera cíclica.  
-            </p>
-            <p>Desde su página web podéis descargar el software: <a style="color: red; text-decoration: underline;" href="https://autonomylogic.com/">OpenPLC</a></p>
-            
-            <h2 class="subtitulo">Manos a la obra</h2>
-            <p>
-                Bien, una vez introducido el software vamos manos a la obra. 
-                Lo primero que hice fue configurar la placa de
-                desarrollo dentro de OpenPLC. 
-            </p>
-            <figure>
-            <img class="imgRecurso" src="../assets/esp32_3.png"/>
-            <figcaption>Antes de nada descargué el pack de Espressif, donde se incluyen las librerías para el ESP32</figcaption>
-            </figure>
-            <img class="imgRecurso" src="../assets/esp32_4.png"/>
-            <img class="imgRecurso" src="../assets/esp32_5.png"/>
-            <figure>
-            <img class="imgRecurso" src="../assets/esp32_2.png"/>
-            <figcaption>Seleccioné el modelo de placa, el ESP32 DevKit V1</figcaption>
-            </figure>
-            <p>Una vez encontrado el modelo de placa, conecté el ESP32 al PC. En
-            mi caso, al trabajar con un S.O. Debian y un CP2102 como conversor
-            USB a UART integrado en el ESP32, no necesité la instalación de
-            drivers, ya que Debian los tiene de forma nativa.
-            </p>
-            <blockquote>
-                >> En algunos ESP32 el conversor es un chip CH340, en cuyo caso sí se necesitan drivers.
-                <p>Se pueden encontrar en el siguiente link: <a style="color: red; text-decoration: underline;" href="https://docs.sunfounder.com/projects/esp32-starter-kit/en/latest/faq/install_driver.html">SunFounder</a></p>
-            </blockquote>
-            <figure>
-            <img class="imgRecurso" src="../assets/esp32_16.png"/>
-            <figcaption>Seleccioné el puerto donde estaba conectado</figcaption>
-            </figure>
-            <p>La idea era realizar un programa en el lenguaje ladder lo más
-            simple posible, así que opté por hacer uno que consistiera en un par
-            de botones, uno de marcha y otro de paro, y un led que respondiera a
-            ellos. Más simple imposible.</p>
-            <p>A continuación establecí los pines que iba a utilizar; en mi caso fueron los siguientes: </p>
-            <ul style="text-align: justify; width: 100%;">
-                <li>Pin 32: Botón de marcha | Digital Input  | %IX0.0</li>
-                <li>Pin 33: Botón de paro   | Digital Input  | %IX0.1</li>
-                <li>Pin 25: Salida al led   | Digital Output | %QX0.0</li>
-            </ul>
-            <p>Este pineado lo trasladé a OpenPLC de la siguiente manera: </p>
-            <figure>
-            <img class="imgRecurso" src="../assets/esp32_7.png"/>
-            <figcaption>Dos inputs y un output</figcaption>
-            </figure>
-            <p>Una vez hecho el pineado, comencé a "escribir" el programa en ladder. Para ello creé un nuevo "rung".</p>
-            <img class="imgRecurso" src="../assets/esp32_8.png"/>
-            <p>Añadí los contactos desde el panel lateral de OpenPLC Editor: </p>
-            <img class="imgRecurso" src="../assets/esp32_9.png"/>
-            <p>El programa era muy sencillo: consistía en dos contactos en
-            serie que representan lógicamente los botones de marcha y paro, y a
-            continuación una bobina que representaba el led. A dicha bobina se
-            le realizó un enclavamiento para que el pulsador de marcha actuara
-            como un interruptor; esto se realizó simplemente con un tercer
-            contacto que tenía el mismo nombre que la carga y que estaba en
-            paralelo junto al contacto de marcha.
-            </p>
-            <img class="imgRecurso" src="../assets/esp32_10.png"/>
-            <figure>
-                <img class="imgRecurso" src="../assets/esp32_11.png">
-            <figcaption>El contacto de paro tenía un estado inicial NC (normalmente cerrado)</figcaption>
-            </figure>
-            <p>Una vez creado el programa establecí las variables: </p>
-            <ul style="text-align: justify; width: 100%;">
-                <li>START | INPUT | BOOL | %IX0.0 | 0</li>
-                <li>STOP | INPUT | BOOL | %IX0.1 | 0</li>
-                <li>LOAD | OUTPUT | BOOL | %QX0.0 | 0</li>
-            </ul>
-            <p>Que trasladé a OpenPLC de la siguiente manera: </p>
-            <img class="imgRecurso" src="../assets/esp32_17.png"/>
-            <p>Una vez había terminado el programa era hora de descargarlo en el ESP32: </p>
-            <figure>
-                <img class="imgRecurso" src="../assets/esp32_13.png"/>
-                <figcaption>En build options, borrar caché, descargar y compilar</figcaption>
-            </figure>
-            <p>Pero me dio error, demasiado fácil estaba siendo: </p>
-            <figure>
-                <img class="imgRecurso" src="../assets/esp32_18.png"/>
-                <figcaption>En el mensaje de error me decía que probara a agregar el usuario —mi usuario actual— al grupo dialout</figcaption>
-            </figure>
-            <pre><code class="language-bash">sudo usermod -a -G dialout enroot</code></pre>
-            <figure>
-                <img class="imgRecurso" src="../assets/esp32_19.png"/>
-                <figcaption>Comprobé que en efecto mi usuario se hubiera añadido al grupo</figcaption>
-            </figure>
-            <figure>
-                <img class="imgRecurso" src="../assets/esp32_20.png"/>
-                <figcaption>Y al fin pude subir mi programa al ESP32</figcaption>
-            </figure>
-            <p>Y hasta aquí esta fase del proyecto; en la fase número 2 mostraré cómo diseñé el circuito y cableé el ESP32 en una breadboard.
-                Espero que quien se haya tomado la molestia de haber llegado hasta aquí haya disfrutada tanto leyendo como yo haciendo el proyecto.
-                ¡Nos vemos a la próxima!
-            </p>
+<img src="../assets/header_lab.webp"/>
 
-            <p class="firma"><b>EnRoot</b></p>
+		<h1>Laboratorio de automatización industrial — Cap. 1: Mi primer PLC casero (ESP32 + OpenPLC)</h1>
 
-        </section>
+		<div class="metaInfo">
+			<span class="fechaBlog">09-07-2026</span>
+			<span class="hashtag">#AutomatizacionIndustrial #SistemasEmbebidos</span>
+		</div>
+
+		<hr style="width: 100%;">
+
+		<p>
+			Hace unos años, cuando trabajaba como técnico electricista, surgió la
+			necesidad profesional de mejorar mis conocimientos sobre redes y
+			comunicaciones. Lo que empezó como una forma de resolver problemas
+			relacionados con mi trabajo terminó despertando una curiosidad que no
+			tardó en ir mucho más allá. Poco a poco fui adentrándome en el mundo de
+			la informática, hasta descubrir una de sus facetas que más me fascinó
+			desde el principio: el hacking.
+		</p>
+
+		<p>
+			Aquella primera toma de contacto me abrió las puertas a un mundo que
+			apenas conocía. Detrás de cada sistema había redes, protocolos, sistemas
+			operativos, lenguajes de programación y un sinfín de mecanismos por
+			descubrir. Lo que comenzó como una necesidad profesional se convirtió
+			en un interés genuino por entender cómo funciona la tecnología, desde
+			las comunicaciones entre máquinas hasta el software que hace posible
+			su funcionamiento. Y, casi sin darme cuenta, acabé encontrando en la
+			informática un nuevo camino profesional.
+		</p>
+
+		<p>
+			Actualmente estoy ampliando mis conocimientos en sistemas embebidos, y me
+			parece una buena oportunidad para recuperar esa conexión entre el mundo
+			eléctrico y el informático. En particular, quiero explorar la automatización
+			industrial desde una perspectiva práctica: construir pequeños laboratorios,
+			experimentar con protocolos de comunicación y entender qué ocurre cuando
+			el software deja de trabajar únicamente con datos y empieza a interactuar
+			con procesos físicos.
+		</p>
+
+		<p>
+			De ahí nace este proyecto personal. La idea es montar un pequeño laboratorio
+			de automatización en el que pueda experimentar con PLCs, dispositivos
+			embebidos y protocolos industriales como Modbus y PROFINET. No pretendo
+			reproducir una instalación industrial real, sino construir una base práctica
+			que me permita comprender mejor sus componentes, su funcionamiento y la
+			forma en que se comunican entre sí.
+		</p>
+
+		<p>
+			Para empezar, he decidido utilizar una placa ESP32 junto con OpenPLC.
+			El objetivo inicial es sencillo: ejecutar un programa de control básico,
+			trabajar con entradas y salidas digitales y comprobar cómo responde el
+			sistema ante diferentes señales. Será una primera aproximación a la lógica
+			de los PLCs y a la relación entre el programa y el hardware.
+		</p>
+
+		<p>
+			En esta primera entrada explicaré cómo configuré OpenPLC Editor, preparé
+			un programa sencillo en lenguaje Ladder y lo cargué en el ESP32. En las
+			siguientes entregas iré ampliando el laboratorio, empezando por el montaje
+			físico y avanzando hacia nuevas pruebas de comunicación y automatización.
+		</p>
+
+		<h2 class="subtitulo">Entendiendo OpenPLC</h2>
+
+		<p>
+			Basta con decir, por ahora, que OpenPLC es un proyecto de software libre
+			que permite desarrollar y ejecutar programas de control industrial.
+			Entre otras posibilidades, trabaja con los lenguajes de programación
+			contemplados en la norma IEC 61131-3 y permite experimentar con lógica
+			de PLC utilizando diferentes plataformas de hardware compatibles.
+		</p>
+
+		<p>
+			En este caso voy a utilizar un ESP32 como plataforma de experimentación.
+			La idea es ejecutar un programa de control que lea unas entradas digitales,
+			evalúe su lógica y actualice una salida. Aunque una placa de desarrollo
+			no sustituye a un PLC industrial en términos de robustez, seguridad o
+			certificación, sí permite explorar algunos de sus principios de
+			funcionamiento de una forma económica y accesible.
+		</p>
+
+		<p>
+			Desde su página web podéis descargar el software:
+			<a style="color: red; text-decoration: underline;" href="https://autonomylogic.com/">OpenPLC</a>
+		</p>
+
+		<h2 class="subtitulo">Manos a la obra</h2>
+
+		<p>
+			Una vez presentado el software, vamos manos a la obra. Lo primero que hice
+			fue configurar la placa de desarrollo dentro de OpenPLC.
+		</p>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_3.png"/>
+			<figcaption>Antes de nada descargué el paquete de Espressif, donde se incluyen las librerías para el ESP32.</figcaption>
+		</figure>
+
+		<img class="imgRecurso" src="../assets/esp32_4.png"/>
+		<img class="imgRecurso" src="../assets/esp32_5.png"/>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_2.png"/>
+			<figcaption>Seleccioné el modelo de placa: el ESP32 DevKit V1.</figcaption>
+		</figure>
+
+		<p>
+			Una vez encontrado el modelo de placa, conecté el ESP32 al PC. En mi caso,
+			al trabajar con Debian y utilizar un conversor USB a UART basado en el
+			CP2102, no necesité instalar drivers adicionales, ya que el sistema dispone
+			de soporte para este dispositivo.
+		</p>
+
+		<blockquote>
+			En algunos ESP32 el conversor USB a UART es un chip CH340. Si el sistema
+			no lo reconoce automáticamente, puede ser necesario instalar o configurar
+			el controlador correspondiente.
+			<p>
+				Se pueden encontrar indicaciones en el siguiente enlace:
+				<a style="color: red; text-decoration: underline;" href="https://docs.sunfounder.com/projects/esp32-starter-kit/en/latest/faq/install_driver.html">SunFounder</a>
+			</p>
+		</blockquote>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_16.png"/>
+			<figcaption>Seleccioné el puerto al que estaba conectado el ESP32.</figcaption>
+		</figure>
+
+		<p>
+			Para empezar quería mantener el programa lo más sencillo posible, así que
+			opté por implementar una lógica de marcha y paro con dos pulsadores y un
+			LED como salida. Es un ejemplo básico, pero permite entender varios
+			conceptos importantes de la programación de PLCs: lectura de entradas,
+			evaluación de condiciones, control de salidas y enclavamiento.
+		</p>
+
+		<p>
+			A continuación establecí los pines que iba a utilizar:
+		</p>
+
+		<ul style="text-align: justify; width: 100%;">
+			<li>Pin 32: botón de marcha | Digital Input | %IX0.0</li>
+			<li>Pin 33: botón de paro | Digital Input | %IX0.1</li>
+			<li>Pin 25: salida al LED | Digital Output | %QX0.0</li>
+		</ul>
+
+		<p>
+			Este mapeo de entradas y salidas lo trasladé a OpenPLC de la siguiente manera:
+		</p>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_7.png"/>
+			<figcaption>Dos entradas digitales y una salida digital.</figcaption>
+		</figure>
+
+		<p>
+			Una vez configuradas las entradas y salidas, comencé a escribir el programa
+			en Ladder. Para ello creé un nuevo rung.
+		</p>
+
+		<img class="imgRecurso" src="../assets/esp32_8.png"/>
+
+		<p>Añadí los contactos desde el panel lateral de OpenPLC Editor:</p>
+
+		<img class="imgRecurso" src="../assets/esp32_9.png"/>
+
+		<p>
+			El programa era muy sencillo: utilizaba los contactos asociados a los
+			botones de marcha y paro para controlar una bobina que representaba el LED.
+			Además, añadí un contacto auxiliar asociado a la propia salida, conectado
+			en paralelo con el de marcha. Este enclavamiento permite mantener la salida
+			activada después de soltar el pulsador de marcha, hasta que se acciona el
+			de paro.
+		</p>
+
+		<img class="imgRecurso" src="../assets/esp32_10.png"/>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_11.png"/>
+			<figcaption>Configuré el contacto de paro como normalmente cerrado (NC) en la lógica Ladder.</figcaption>
+		</figure>
+
+		<p>
+			Una vez creado el programa, establecí las variables:
+		</p>
+
+		<ul style="text-align: justify; width: 100%;">
+			<li>START | INPUT | BOOL | %IX0.0 | 0</li>
+			<li>STOP | INPUT | BOOL | %IX0.1 | 0</li>
+			<li>LOAD | OUTPUT | BOOL | %QX0.0 | 0</li>
+		</ul>
+
+		<p>Y las configuré en OpenPLC de la siguiente manera:</p>
+
+		<img class="imgRecurso" src="../assets/esp32_17.png"/>
+
+		<p>
+			Con el programa terminado, llegó el momento de compilarlo y cargarlo en el ESP32.
+		</p>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_13.png"/>
+			<figcaption>En las opciones de compilación, limpié la caché y lancé el proceso de compilación y carga.</figcaption>
+		</figure>
+
+		<p>
+			Pero apareció un error. Demasiado fácil estaba siendo.
+		</p>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_18.png"/>
+			<figcaption>El mensaje de error indicaba que debía añadir mi usuario al grupo dialout para acceder al puerto serie.</figcaption>
+		</figure>
+
+		<p>
+			En Debian, los permisos de acceso a los puertos serie suelen gestionarse
+			mediante grupos del sistema. En mi caso, añadí mi usuario al grupo dialout
+			con el siguiente comando:
+		</p>
+
+		<pre><code class="language-bash">sudo usermod -a -G dialout enroot</code></pre>
+
+		<p>
+			Sustituye <code>enroot</code> por tu nombre de usuario si es diferente.
+			Después de modificar los grupos, puede ser necesario cerrar la sesión y
+			volver a iniciarla para que el cambio tenga efecto.
+		</p>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_19.png"/>
+			<figcaption>Comprobé que mi usuario se hubiera añadido al grupo.</figcaption>
+		</figure>
+
+		<figure>
+			<img class="imgRecurso" src="../assets/esp32_20.png"/>
+			<figcaption>Por fin pude cargar el programa en el ESP32.</figcaption>
+		</figure>
+
+		<h2 class="subtitulo">¿Qué hemos conseguido?</h2>
+
+		<p>
+			Con este primer ejercicio ya tenemos una base sobre la que seguir trabajando:
+			una placa ESP32 ejecutando una lógica de control desarrollada en Ladder,
+			con dos entradas digitales y una salida. Es un montaje sencillo, pero
+			permite empezar a relacionar la programación de PLCs con el hardware y
+			comprender cómo se implementa una lógica básica de marcha y paro.
+		</p>
+
+		<p>
+			En la siguiente entrega mostraré cómo diseñé el circuito y cableé el ESP32
+			en una protoboard. Más adelante, la idea es ampliar el laboratorio para
+			experimentar con la comunicación industrial y estudiar protocolos como
+			Modbus, además de explorar otras tecnologías habituales en entornos de
+			automatización.
+		</p>
+
+		<p>
+			Este es un proyecto personal que iré construyendo poco a poco, documentando
+			tanto los resultados como los errores que me encuentre por el camino.
+			Espero que disfrutéis leyendo estas pruebas tanto como yo disfruto
+			haciéndolas. ¡Nos vemos en la próxima!
+		</p>
+
+		<p class="firma"><b>EnRoot</b></p>
+		</section>
 	</main>
     <script src="../js/main.js"></script>
 </body>
