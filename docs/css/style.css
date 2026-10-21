@@ -441,6 +441,23 @@ blockquote {
 	animation: colorChange 3s linear infinite 2.25s;
 }
 
+/* Valoraciones */
+
+.green-star {
+		 color: green;
+		 font-size: 20px;
+}
+
+.yellow-star {
+		color: yellow;
+		font-size: 20px;
+}
+
+.red-star {
+		color: red;
+		font-size: 20px;
+}
+
 @keyframes colorChange {
 	0% {
 		color: white;
@@ -452,6 +469,7 @@ blockquote {
 		color: white;
 	}
 }
+
 
 
 /*-----------------------------------------------------------------*/
