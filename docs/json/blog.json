@@ -1,6 +1,13 @@
 [
 		
 		{
+"fecha": "21-10-2026",
+"titulo": "GO - Contra la máquina | Semana 1,
+"filePath":"blogs/go1.html",
+"imgPath":"assets/AI.webp",
+"descripcion": "Explico por qué he empezado a jugar al GO y como pienso convertirlo en un hábito."		
+		},
+		{
 "fecha": "20-10-2026",
 "titulo": "Sitges 2026 día 3 y 4 - Hope, Wildwood y Bad Lieutenant: Tokio",
 "filePath":"blogs/hope.html",

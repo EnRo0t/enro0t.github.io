@@ -319,6 +319,27 @@ pre {
 
 /* -----------------------  */
 
+/* Para imágenes del GO */
+
+.go-containers {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+}
+
+.go-containers figure {
+		width: 25%;
+}
+
+.go-containers img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid white;
+}
+
+
+/* ------------------------ */
 blockquote {
   width: 100%;
   font-size: 14px;
