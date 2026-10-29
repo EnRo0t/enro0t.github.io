@@ -464,6 +464,11 @@ blockquote {
 
 /* Valoraciones */
 
+.blue-star {
+		color: #52d6fa;
+		font-size: 20px;
+}
+
 .green-star {
 		 color: green;
 		 font-size: 20px;
