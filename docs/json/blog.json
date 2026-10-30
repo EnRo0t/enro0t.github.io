@@ -1,6 +1,13 @@
 [
 		
 		{
+"fecha": "30-10-2026",
+"titulo": "GO - Contra la máquina | Semana 2",
+"filePath":"blogs/go2.html",
+"imgPath":"assets/AI2.webp",
+"descripcion": "Relato como ha sido la segunda semana de la partida de go."		
+		},
+		{
 "fecha": "21-10-2026",
 "titulo": "GO - Contra la máquina | Semana 1",
 "filePath":"blogs/go1.html",
