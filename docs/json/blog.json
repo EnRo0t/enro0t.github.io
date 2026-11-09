@@ -1,6 +1,13 @@
 [
 		
 		{
+"fecha": "09-11-2026",
+"titulo": "GO - Contra la máquina | Semana 3",
+"filePath":"blogs/go3.html",
+"imgPath":"assets/AI3.webp",
+"descripcion": "Novedades semanales de la peor partida de go de la historia. De momento."		
+		},
+		{
 "fecha": "30-10-2026",
 "titulo": "GO - Contra la máquina | Semana 2",
 "filePath":"blogs/go2.html",
